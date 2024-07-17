@@ -6,7 +6,7 @@ const survey_schema = new mongoose.Schema({
     trim: true,
   },
   survey_status: {
-    type: String,
+    type: Boolean,
     required: [true, "status is required"],
   },
   survey_name: {
@@ -17,6 +17,9 @@ const survey_schema = new mongoose.Schema({
     type: String,
     required: [true, " description is required"],
   },
+  question: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'question'}],
   survey_start_date: {
     type: Date,
     required: [true, " startdate is required"],
