@@ -17,7 +17,7 @@ const postSurvey = async (req, res) => {
 
     newSurvey.save().then((savedSurvey) => {
       console.log(savedSurvey);
-      res.status(201).json({ msg: "survey hadaglagdlaa" });
+      res.status(201).json({ data:savedSurvey, msg: "survey hadaglagdlaa" });
     });
   } catch (error) {
     console.log(error);

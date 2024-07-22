@@ -1,14 +1,5 @@
 const mongoose = require("mongoose");
 const survey_schema = new mongoose.Schema({
-  survey_id: {
-    type: Number,
-    required: [true, "id is required"],
-    trim: true,
-  },
-  survey_status: {
-    type: Boolean,
-    required: [true, "status is required"],
-  },
   survey_name: {
     type: String,
     required: [true, " name is required"],
@@ -17,9 +8,6 @@ const survey_schema = new mongoose.Schema({
     type: String,
     required: [true, " description is required"],
   },
-  question: [{ 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'question'}],
   survey_start_date: {
     type: Date,
     required: [true, " startdate is required"],
@@ -27,6 +15,10 @@ const survey_schema = new mongoose.Schema({
   survey_end_date: {
     type: Date,
     required: [false, " subheading is required"],
+  },
+  survey_status: {
+    type: Boolean,
+    required: [true, "status is required"],
   },
 });
 

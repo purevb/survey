@@ -1,11 +1,6 @@
 const mongoose = require("mongoose");
 
 const answers_schema = new mongoose.Schema({
-  answers_id: {
-    type: Number,
-    required: [true, "id is required"],
-    trim: true,
-  },
   answer_text: {
     type: String,
     required: [true, "answer_text is required"],
@@ -14,10 +9,10 @@ const answers_schema = new mongoose.Schema({
 });
 
 const questions_schema = new mongoose.Schema({
-  questions_id: {
-    type: Number,
-    required: [true, "id is required"],
-    trim: true,
+  surveyID: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'survey',
+    required:true 
   },
   questions_type_id: {
     type: mongoose.Schema.Types.ObjectId,

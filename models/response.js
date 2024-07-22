@@ -1,10 +1,5 @@
 const mongoose=require("mongoose")
 const response_schema = new mongoose.Schema({
-    response_id: {
-        type: Number,
-        required: [true, "id is required"],
-        trim: true,
-    },
     survey_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "survey",
