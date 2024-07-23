@@ -19,6 +19,7 @@ const questions_schema = new mongoose.Schema({
     ref: "questions_type",
   },
   question_text: {
+    
     type: String,
     required: [true, " text is required"],
   },

@@ -86,38 +86,31 @@ const usersAnswer = async (req, res) => {
 };
 const surveyQuestions = async (req, res) => {
   try {
-    const asuult = await Squestion.aggregate([
+    const results = await Survey.aggregate([
       {
         $lookup: {
-          from: "surveys",
-          localField: "survey_id",
-          foreignField: "_id",
-          as: "survey_name",
+          from: "questions", 
+          localField: "_id", 
+          foreignField: "surveyID",
+          as: "question_details",
         },
       },
-      { $unwind: "$survey_name" },
-      {
-        $lookup: {
-          from: "questions",
-          localField: "questions_id",
-          foreignField: "_id",
-          as: "questionDetails",
-        },
-      },
-      { $unwind: "$questionDetails" },
+      { $unwind: "$question_details" },
       {
         $project: {
-          survey_name: "$survey_name.survey_name",
-          questionDetails: "$questionDetails.question_text",
+          survey_name: 1,
+          question_text: "$question_details.question_text",
+          answer_text: "$question_details.answers"
         },
       },
     ]);
 
-    console.log(asuult);
-    res.status(200).json(asuult);
+    console.log(results);
+
+    res.status(200).json(results);
   } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
+    console.error(error);
+    res.status(500).json({ msg: "Error" });
   }
 };
 
