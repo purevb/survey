@@ -89,18 +89,41 @@ const surveyQuestions = async (req, res) => {
     const results = await Survey.aggregate([
       {
         $lookup: {
-          from: "questions", 
-          localField: "_id", 
+          from: "questions",
+          localField: "_id",
           foreignField: "surveyID",
           as: "question_details",
         },
       },
-      { $unwind: "$question_details" },
+      {
+        $unwind: "$question_details",
+      },
+      {
+        $group: {
+          _id: "$_id",
+          survey_name: { $first: "$survey_name" },
+          survey_description: { $first: "$survey_description" },
+          survey_start_date : {$first :"$survey_start_date"},
+          survey_end_date : {$first :"$survey_end_date"},
+          survey_status : {$first :"$survey_status"},
+          questions: {
+            $push: {
+              _id:"$_id",
+              question_text: "$question_details.question_text",
+              answer_text: "$question_details.answers",
+            },
+          },
+        },
+      },
       {
         $project: {
+          _id: 1,
           survey_name: 1,
-          question_text: "$question_details.question_text",
-          answer_text: "$question_details.answers"
+          survey_description:1,
+          survey_start_date:1,
+          survey_end_date:1,
+          survey_status:1,
+          questions: 1,
         },
       },
     ]);
@@ -113,6 +136,7 @@ const surveyQuestions = async (req, res) => {
     res.status(500).json({ msg: "Error" });
   }
 };
+
 
 module.exports = {
   questionAnswers,

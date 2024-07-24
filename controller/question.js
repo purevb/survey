@@ -2,8 +2,8 @@ const Ques = require("../models/questions");
 
 const getQuestion = async (req, res) => {
   try {
-    await Ques.find().then((question) => {
-      //.populate("questions_type_id")
+    await Ques.find().populate("questions_type_id").then((question) => {
+      //
       console.log(question);
       res.status(200).json({ question: question });
     });
