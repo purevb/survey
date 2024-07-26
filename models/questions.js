@@ -24,7 +24,7 @@ const questions_schema = new mongoose.Schema({
     required: [true, " text is required"],
   },
   answers: [{
-    type: answers_schema, //Survey.id
+    type: mongoose.Schema.Types.Mixed,
     required:false,
   }],
   is_Mandatory: {

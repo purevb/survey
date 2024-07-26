@@ -24,7 +24,7 @@ const questionAnswers = async (req, res) => {
         },
       },
     ]);
-
+  console.log(results);
     console.log(results);
 
     res.status(200).json(results);
@@ -108,7 +108,7 @@ const surveyQuestions = async (req, res) => {
           survey_status : {$first :"$survey_status"},
           questions: {
             $push: {
-              _id:"$_id",
+              _id:"$question_details._id",
               question_text: "$question_details.question_text",
               answer_text: "$question_details.answers",
             },

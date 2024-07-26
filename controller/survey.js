@@ -40,24 +40,31 @@ const searchSurvey = async (req, res) => {
 const updateSurvey = async (req, res) => {
   try {
     const id = req.params.id;
-  const updatedSurvey = req.body;
-  const updatedSurveyResult = await Survey.findByIdAndUpdate(
-    { _id: id },
-    updatedSurvey,
-    { new: true }
-  );
-  if(updatedSurveyResult){
+    const updatedSurvey = req.body;
+
+    const existingSurvey = await Survey.findById(id);
+    if (!existingSurvey) {
+      return res.status(404).json({ msg: 'Survey not found' });
+    }
+
+    
+    const updatedSurveyResult = await Survey.findByIdAndUpdate(
+      id, 
+      updatedSurvey,
+      { new: true }  
+    );
+
     console.log(updatedSurveyResult);
-    res.status(200).json({msg:"Survey shineclgdlee",
-        status:updatedSurveyResult
+    res.status(200).json({
+      msg: 'Survey updated successfully',
+      status: updatedSurveyResult
     });
+  } catch (error) {
+    console.error('Error updating survey:', error.message);
+    res.status(500).json({ msg: 'Error updating survey', error: error.message });
   }
-}
-catch(error){
-    console.log(error);
-    res.status(500).json({msg:"ajilllhguu bnsdeee"});
-}
 };
+
 
 const deleteSurvey = async(req,res)=>{
     try{
