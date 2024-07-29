@@ -51,11 +51,34 @@ const updateQuestion = async (req, res) => {
       console.log(updatedQuestionResult);
       res.status(200).json({ question: updatedQuestionResult });
     }
-  } catch (error) {
+  } catch (error) { 
     console.log(error);
     res.status(500).json({ msg: "aldaaaaaa" });
   }
 };
+const updateAnswer = async (req, res) => {
+  try {
+    const questionId = req.params.questionId;
+    const answerId = req.params.answerId;
+    const updatedAnswerText = req.body.answer_text;
+    const question = await Ques.findById(questionId);
+
+    if (!question) {
+      return res.status(404).json({ msg: 'Question not found' });
+    }
+    const answer = question.answers.id(answerId);
+    if (!answer) {
+      return res.status(404).json({ msg: 'Answer not found' });
+    }
+    answer.answer_text = updatedAnswerText;
+    await question.save();
+    res.status(200).json({ msg: 'Answer updated successfully', question });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'An error occurred' });
+  }
+};
+
 const deleteQuestion = async (req, res) => {
   try {
     const id = req.params.id;
@@ -69,7 +92,9 @@ const deleteQuestion = async (req, res) => {
   }
 };
 
+
 module.exports = {
+  updateAnswer,
   getQuestion,
   postQuestion,
   search,

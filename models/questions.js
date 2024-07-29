@@ -1,36 +1,32 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const answers_schema = new mongoose.Schema({
+const answersSchema = new mongoose.Schema({
   answer_text: {
     type: String,
-    required: [true, "answer_text is required"],
+    required: [true, 'answer_text is requiredddddd'],
     trim: true,
   },
 });
 
-const questions_schema = new mongoose.Schema({
-  surveyID: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'survey',
-    required:true 
+const questionsSchema = new mongoose.Schema({
+  surveyID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Survey',
+    required: true,
   },
   questions_type_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "questions_type",
+    ref: 'QuestionsType',
   },
   question_text: {
-    
     type: String,
-    required: [true, " text is required"],
+    required: [true, 'text is required'],
   },
-  answers: [{
-    type: mongoose.Schema.Types.Mixed,
-    required:false,
-  }],
+  answers: [answersSchema],
   is_Mandatory: {
     type: Boolean,
-    required: [true, " is_Mandatory is required"],
+    required: [true, 'is_Mandatory is required'],
   },
 });
 
-module.exports = mongoose.model("question", questions_schema);
+module.exports = mongoose.model('Question', questionsSchema);
