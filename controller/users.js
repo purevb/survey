@@ -46,8 +46,8 @@ const loginUser = async (req, res) => {
     if (isMatch === false) {
       throw new Error("Password invalid");
     }
-    let tokenData =  { _id: user._id, email: user.email };
-    const token = await UserService.generateToken(tokenData, "07a9560916d39825b5913093c0534bf2efe69392bcb6ba9b6bcb259ac787f4a2", "1h");
+    let tokenData = { _id: user._id, email: user.email };
+    const token = await UserService.generateToken(tokenData, "secret key", "1h");
     res.status(200).json({ status: true, token: token });
   } catch (err) {
     throw err;
@@ -59,3 +59,4 @@ module.exports = {
   search,
   postUser,
 };
+//07a9560916d39825b5913093c0534bf2efe69392bcb6ba9b6bcb259ac787f4a2

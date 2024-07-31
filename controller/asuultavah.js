@@ -106,6 +106,7 @@ const surveyQuestions = async (req, res) => {
           survey_start_date : {$first :"$survey_start_date"},
           survey_end_date : {$first :"$survey_end_date"},
           survey_status : {$first :"$survey_status"},
+          img_url:{$first:"$img_url"},
           questions: {
             $push: {
               _id:"$question_details._id",
@@ -123,6 +124,7 @@ const surveyQuestions = async (req, res) => {
           survey_start_date:1,
           survey_end_date:1,
           survey_status:1,
+          img_url:1,
           questions: 1,
         },
       },

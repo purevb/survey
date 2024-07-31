@@ -20,6 +20,10 @@ const survey_schema = new mongoose.Schema({
     type: Boolean,
     required: [true, "status is required"],
   },
+  img_url:{
+    type:String,
+    require:false
+  }
 });
 
 module.exports = mongoose.model("survey", survey_schema);
