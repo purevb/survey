@@ -27,6 +27,10 @@ const questionsSchema = new mongoose.Schema({
     type: Boolean,
     required: [true, 'is_Mandatory is required'],
   },
+  img_url:{
+    type:String,
+    required:false
+  }
 });
 
-module.exports = mongoose.model('Question', questionsSchema);
+module.exports = mongoose.model('question', questionsSchema);

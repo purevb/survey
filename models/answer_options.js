@@ -2,17 +2,20 @@ const mongoose = require("mongoose");
 const answers_options_schema = new mongoose.Schema({
   question_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "questions",
+    ref: "question",
   },
   response_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "response",
   },
   user_choice: [{
-    type: String,
-    required: true,
-    trim: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref:"answersSchema"
   }],
+  user_id:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"user"
+  }
 });
 
 module.exports = mongoose.model("answers_options", answers_options_schema);
