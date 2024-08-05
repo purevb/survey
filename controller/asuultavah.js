@@ -1,9 +1,6 @@
-const Ques = require("../models/questions");
-const Aoption = require("../models/answer_options");
+const Ques = require("../models/question");
 const Response = require("../models/response");
 const Survey = require("../models/survey");
-const User = require("../models/users");
-const Squestion = require("../models/survey_questions");
 
 const questionAnswers = async (req, res) => {
   try {
@@ -89,27 +86,25 @@ const surveyQuestions = async (req, res) => {
     const results = await Survey.aggregate([
       {
         $lookup: {
-          from: "questions",
-          localField: "_id",
-          foreignField: "surveyID",
+          from: "questions", 
+          localField: "_id", 
+          foreignField: "surveyID", 
           as: "question_details",
         },
       },
-      {
-        $unwind: "$question_details",
-      },
+      { $unwind: "$question_details" },
       {
         $group: {
           _id: "$_id",
           survey_name: { $first: "$survey_name" },
           survey_description: { $first: "$survey_description" },
-          survey_start_date : {$first :"$survey_start_date"},
-          survey_end_date : {$first :"$survey_end_date"},
-          survey_status : {$first :"$survey_status"},
-          img_url:{$first:"$img_url"},
+          survey_start_date: { $first: "$survey_start_date" },
+          survey_end_date: { $first: "$survey_end_date" },
+          survey_status: { $first: "$survey_status" },
+          img_url: { $first: "$img_url" },
           questions: {
             $push: {
-              _id:"$question_details._id",
+              _id: "$question_details._id",
               question_text: "$question_details.question_text",
               answer_text: "$question_details.answers",
             },
@@ -120,24 +115,24 @@ const surveyQuestions = async (req, res) => {
         $project: {
           _id: 1,
           survey_name: 1,
-          survey_description:1,
-          survey_start_date:1,
-          survey_end_date:1,
-          survey_status:1,
-          img_url:1,
+          survey_description: 1,
+          survey_start_date: 1,
+          survey_end_date: 1,
+          survey_status: 1,
+          img_url: 1,
           questions: 1,
         },
       },
     ]);
 
     console.log(results);
-
     res.status(200).json(results);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ msg: "Error" });
+    res.status(500).json({ msg: "Error retrieving survey questions" });
   }
 };
+
 
 
 module.exports = {
