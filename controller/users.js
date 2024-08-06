@@ -28,9 +28,14 @@ const search = async (req, res) => {
 const postUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const succesRes = await UserService.registerUser(email, password);
-    res.json({ status: true, success: "User Registered Succesfully" });
-  } catch (err) {
+    const findUser= await User.findOne({email:email});
+    if(!findUser){
+      const succesRes = await UserService.registerUser(email, password);
+      res.json({ status: true, success: "User Registered Succesfully" });
+    }else {
+      throw new Error("User already exists");
+    }
+    } catch (err) {
     throw err;
   }
 };

@@ -106,6 +106,7 @@ const surveyQuestions = async (req, res) => {
             $push: {
               _id: "$question_details._id",
               question_text: "$question_details.question_text",
+              question_type:"$question_details.questions_type_id",
               answer_text: "$question_details.answers",
             },
           },
