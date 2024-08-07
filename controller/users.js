@@ -1,6 +1,7 @@
 const { response } = require("express");
 const User = require("../models/users");
 const UserService = require("../services/user_services");
+const asyncHandler = require("express-async-handler")
 const getUser = async (req, res) => {
   try {
     await User.find().then((user) => {
@@ -25,7 +26,7 @@ const search = async (req, res) => {
   }
 };
 
-const postUser = async (req, res, next) => {
+const postUser =  asyncHandler(async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const findUser= await User.findOne({email:email});
@@ -38,26 +39,24 @@ const postUser = async (req, res, next) => {
     } catch (err) {
     throw err;
   }
-};
-const loginUser = async (req, res) => {
+});
+const loginUser = asyncHandler( async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await UserService.checkuser(email);
-    console.log(user);
-    if (!user) {
-      throw new Error("User dont exist");
-    }
     const isMatch = await user.comparePassword(password);
-    if (isMatch === false) {
-      throw new Error("Password invalid");
+    if(user &&isMatch ){
+      let tokenData = { _id: user._id, email: user.email };
+      const token = await UserService.generateToken(tokenData, "secret key", "1h");
+      res.status(200).json({ status: true, token: token ,id: user._id});
+    
+    }else {
+      throw new Error("Password in valid or User dont exist");
     }
-    let tokenData = { _id: user._id, email: user.email };
-    const token = await UserService.generateToken(tokenData, "secret key", "1h");
-    res.status(200).json({ status: true, token: token });
-  } catch (err) {
+    } catch (err) {
     throw err;
   }
-};
+});
 module.exports = {
   loginUser,
   getUser,

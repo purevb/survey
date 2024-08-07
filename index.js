@@ -45,7 +45,7 @@ const connectToDB = async () => {
     console.log(error);
     process.exit(1);
   }
-};
+};  
 connectToDB();
 const port = 3106;
 app.use(notFound);
