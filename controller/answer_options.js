@@ -14,6 +14,17 @@ const postAoptions = async (req, res) => {
   }
 };
 
+const postAoptionses = async (req, res) => {
+  try {
+    const answerOptions = req.body.answers_options;
+    const newAoption = await  Aop.insertMany(answerOptions);
+    res.status(200).json({aoption:newAoption})
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "aldaa" });
+  }
+};
+
 const getAoptions = async (req, res) => {
   try {
     await Aop.find().then((aoption) => {
@@ -73,6 +84,7 @@ const deleteAoptions = async (req, res) => {
 
 module.exports = {
   postAoptions,
+  postAoptionses,
   getAoptions,
   search,
   updateAoptoins,

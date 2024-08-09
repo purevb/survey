@@ -25,6 +25,18 @@ const postQuestion = async (req, res) => {
   }
 };
 
+const postQuestions = async (req, res) => {
+  try {
+    const questioArray=req.body.questions
+    const response=await Ques.insertMany(questioArray);
+    res.status(200).json({ question: response });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "aldatai bn" });
+  }
+};
+
+
 const search = async (req, res) => {
   try {
     const id = req.params.id;
@@ -97,6 +109,7 @@ module.exports = {
   updateAnswer,
   getQuestion,
   postQuestion,
+  postQuestions,
   search,
   updateQuestion,
   deleteQuestion,
