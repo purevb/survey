@@ -32,7 +32,7 @@ const postQuestions = async (req, res) => {
     res.status(200).json({ question: response });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ msg: "aldatai bn" });
+    res.status(500).json({ msg: "aldatai bnddaa" });
   }
 };
 
