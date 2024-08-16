@@ -16,7 +16,7 @@ const postAoptions = async (req, res) => {
 
 const postAoptionses = async (req, res) => {
   try {
-    const answerOptions = req.body.answers_options;
+    const answerOptions = req.body.aoption;
     const newAoption = await  Aop.insertMany(answerOptions);
     res.status(200).json({aoption:newAoption})
   } catch (error) {
