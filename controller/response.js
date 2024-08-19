@@ -23,6 +23,31 @@ const getResponse = async (req, res) => {
     res.status(500).json({ msg: "Server Error", error: error.message });
   }
 };
+const updateResponse = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const {end_date} = req.body;
+
+    const existingSurvey = await Survey.findById(id);
+    if (!existingSurvey) {
+      return res.status(404).json({ msg: 'Survey not found' });
+    }
+    const updatedSurveyResult = await Survey.findByIdAndUpdate(
+      id, 
+      end_date,
+      { new: true }  
+    );
+
+    console.log(updatedSurveyResult);
+    res.status(200).json({
+      msg: 'Survey updated successfully',
+      status: updatedSurveyResult
+    });
+  } catch (error) {
+    console.error('Error updating survey:', error.message);
+    res.status(500).json({ msg: 'Error updating survey', error: error.message });
+  }
+};
 
 const search = async (req, res) => {
   try {
@@ -50,7 +75,7 @@ const deleteResponse = async (req, res) => {
 };
 module.exports = {
   postResponse,
-  update,
+  updateResponse,
   getResponse,
   search,
   deleteResponse,
