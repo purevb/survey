@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const answers_options_schema = new mongoose.Schema({
+  survey_id:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"survey"
+  },
   question_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "question",
