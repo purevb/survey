@@ -27,7 +27,9 @@ const postAoptionses = async (req, res) => {
 
 const getAoptions = async (req, res) => {
   try {
-    await Aop.find().populate("question_id").then((aoption) => {
+    await Aop.find()
+    // .populate("question_id")
+    .then((aoption) => {
       console.log(aoption);
       res.status(200).json({ aoption: aoption });
     });
