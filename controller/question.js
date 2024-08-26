@@ -12,6 +12,19 @@ const getQuestion = async (req, res) => {
     res.status(500).json({ msg: "aldaatai bn" });
   }
 };
+
+const get = async (req, res) => {
+  try {
+    await Ques.find().then((question) => {
+      //
+      console.log(question);
+      res.status(200).json({ question: question });
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "aldaatai bn" });
+  }
+};
 const postQuestion = async (req, res) => {
   try {
     const newQuestion = new Ques(req.body);
@@ -113,4 +126,5 @@ module.exports = {
   search,
   updateQuestion,
   deleteQuestion,
+  get
 };
