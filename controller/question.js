@@ -13,7 +13,11 @@ const getQuestion = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 const get = async (req, res) => {
+=======
+const get= async (req, res) => {
+>>>>>>> bbdb6e1ee7a32d9980c27738e274c99615698bfb
   try {
     await Ques.find().then((question) => {
       //
@@ -37,6 +41,8 @@ const postQuestion = async (req, res) => {
     res.status(500).json({ msg: "aldatai bn" });
   }
 };
+
+
 
 const postQuestions = async (req, res) => {
   try {
