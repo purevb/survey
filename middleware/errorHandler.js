@@ -1,4 +1,4 @@
-const { stack } = require("../routes/users");
+// const { stack } = require("../routes/users");
 
 const notFound = (req,res,next )=>{
     const error = new Error(
