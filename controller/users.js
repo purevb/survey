@@ -79,11 +79,40 @@ const updateUser = async (req, res) => {
     res.status(500).json({ msg: "ajilsngue bro" });
   }
 };
+const addSurveyId = async (req, res) => {
+  const userId = req.params.id;
+  const surveyId = req.body.surveyId;
+
+  if (!userId || !surveyId) {
+    return res.status(400).json({ msg: "User ID and Survey ID are required" });
+  }
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $push: { particatedSurveys: surveyId } },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    res
+      .status(200)
+      .json({ msg: "Survey ID added successfully", user: updatedUser });
+  } catch (error) {
+    console.error("Error adding survey ID:", error);
+    res.status(500).json({ msg: "Internal server error" });
+  }
+};
+
 module.exports = {
   loginUser,
   getUser,
   search,
   postUser,
-  updateUser
+  updateUser,
+  addSurveyId,
 };
 //07a9560916d39825b5913093c0534bf2efe69392bcb6ba9b6bcb259ac787f4a2
