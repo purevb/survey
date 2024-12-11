@@ -28,10 +28,10 @@ const search = async (req, res) => {
 
 const postUser = asyncHandler(async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, name, phone_number } = req.body;
     const findUser = await User.findOne({ email: email });
     if (!findUser) {
-      const succesRes = await UserService.registerUser(email, password);
+      const succesRes = await UserService.registerUser(email, password, name, phone_number);
       res.json({ status: true, success: "User Registered Succesfully" });
     } else {
       throw new Error("User already exists");

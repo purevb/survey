@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -11,14 +12,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "password is required"],
   },
-  particatedSurveys: [
-    {
-      type: mongoose.Schema.Types.Mixed,
-      ref: "survey",
-      required: false,
-    },
-  ],
+  name: {
+    type: String,
+    required: [true, "name is required"],
+  },
+  phone_number: {
+    type: String,
+    required: [true, "phone_number is required"],  // Ensure it's required
+  },
 });
+
 userSchema.pre("save", async function () {
   try {
     var user = this;
@@ -38,4 +41,5 @@ userSchema.methods.comparePassword = async function (userPassword) {
     throw err;
   }
 };
+
 module.exports = mongoose.model("User", userSchema);

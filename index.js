@@ -6,30 +6,29 @@ const bodyParser = require("body-parser");
 const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 app.use(cors({
-  origin: "*", 
-  methods: ["GET", "POST", "PUT", "DELETE"], 
-  credentials: true 
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
 }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const Survey = require("./routes/survey");
-app.use("/api", Survey);
-const Type = require("./routes/question_type");
-app.use("/api", Type);
-const Question = require("./routes/question");
-app.use("/api", Question);
+const region = require("./routes/region");
+app.use("/api", region);
+const property = require("./routes/property");
+app.use("/api", property);
+const ptype = require("./routes/property_type");
+app.use("/api", ptype);
 const User = require("./routes/users");
 app.use("/api", User);
-const Response = require("./routes/response");
-app.use("/api", Response);
-const Aop = require("./routes/answer_options");
-app.use("/api", Aop);
-const Asuult = require("./routes/asuultavah");
-app.use("/api", Asuult);
-const Squestion = require("./routes/survey_questions");
-app.use("/api", Squestion);
+const favorite = require("./routes/favorite");
+app.use("/api", favorite);
+const booking = require("./routes/booking");
+app.use("/api", booking);
+const bstatus = require("./routes/booking_status");
+app.use("/api", bstatus);
+
 
 const connectToDB = async () => {
 
@@ -40,7 +39,7 @@ const connectToDB = async () => {
     console.log(error);
     process.exit(1);
   }
-};  
+};
 connectToDB();
 
 const port = 3106;
